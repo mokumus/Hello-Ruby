@@ -1,24 +1,29 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
-
-Things you may want to cover:
 
 * Ruby version
-
+    * 3.2.1
 * System dependencies
-
+    * wsl or ubuntu environment
+    * postgresql -> https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-20-04
 * Configuration
-
+    ```bash
+    bundle install
+    ```
 * Database creation
 
-* Database initialization
+    ```bash
 
-* How to run the test suite
+    rails db:create
+    rails db:migrate
 
-* Services (job queues, cache servers, search engines, etc.)
+    #In postman you can send HTTP requests to localhost:3000 e.g:
+    GET -> localhost:3000/groups
+    POST -> localhost:3000/groups
+    #Requests accepts json bodies.
+    ```
 
-* Deployment instructions
-
-* ...
+* Run the local server
+    ```bash
+    rails server
+    ```
