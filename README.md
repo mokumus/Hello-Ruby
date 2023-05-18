@@ -2,7 +2,7 @@
 
 
 * Ruby version
-    * 3.2.1
+    * 3.2.2
 * System dependencies
     * wsl or ubuntu environment
     * postgresql -> https://www.digitalocean.com/community/tutorials/how-to-use-postgresql-with-your-ruby-on-rails-application-on-ubuntu-20-04
