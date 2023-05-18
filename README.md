@@ -13,6 +13,8 @@
 * Database creation
 
     ```bash
+    #start pg cluster
+    sudo pg_ctlcluster 12 main start
 
     rails db:create
     rails db:migrate
