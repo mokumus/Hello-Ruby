@@ -11,7 +11,8 @@ jobs:
           echo secrets.TEST_VAR=${{ secrets.TEST_VAR }}
           echo secrets.BUNDLE_GEMS__CONTRIBSYS__COM=${{ secrets.BUNDLE_GEMS__CONTRIBSYS__COM }}
           echo vars.PUBLIC_VAR=${{ vars.PUBLIC_VAR }}
-          export BUNDLE_GEMS__CONTRIBSYS__COM=${{ secrets.BUNDLE_GEMS__CONTRIBSYS__COM }}
+          echo vars.QA_VAR=${{ vars.QA_VAR }}
+       
       # TODO: Add rest of the secrets
       # - name: "List directory: ls -ltr"
       #   run: |
