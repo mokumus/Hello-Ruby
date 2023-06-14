@@ -5,6 +5,7 @@ on: [push]
 jobs:
   check-out-the-code:
     runs-on:  ubuntu-latest
+    environment: qa
     steps:
       - name: Export sidekiq credentials to local env
         run: |
