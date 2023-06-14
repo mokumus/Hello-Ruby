@@ -8,7 +8,7 @@ jobs:
     steps:
       - name: Export sidekiq credentials to local env
         run: |
-          echo env.BUNDLE_GEMS__CONTRIBSYS__COM=$BUNDLE_GEMS__CONTRIBSYS__COM
+          echo secrets.BUNDLE_GEMS__CONTRIBSYS__COM=${{ secrets.BUNDLE_GEMS__CONTRIBSYS__COM }}
           export BUNDLE_GEMS__CONTRIBSYS__COM=${{ secrets.BUNDLE_GEMS__CONTRIBSYS__COM }}
       # TODO: Add rest of the secrets
       # - name: "List directory: ls -ltr"
