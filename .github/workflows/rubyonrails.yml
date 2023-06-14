@@ -3,50 +3,31 @@ name: Rails Unit Tests
 on: [push]
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    services:
-      postgres:
-        image: postgres:11.6-alpine
-        env:
-          POSTGRES_PASSWORD:
-          POSTGRES_USER:  
-        ports:
-          - 5432:5432
-        # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-
+  check-out-the-code:
+    runs-on:  ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: '3.2.2' # Not needed with a .ruby-version file
-          bundler-cache: true # runs 'bundle install' and caches installed gems automatically
-
-      - name: Install required apt packages
+      - name: Export sidekiq credentials to local env
         run: |
-          sudo apt-get -y install libpq-dev
-
-      - name: Setup cache key and directory for gems cache
-        uses: actions/cache@v1
-        with:
-          path: vendor/bundle
-          key: ${{ runner.os }}-gem-use-ruby-${{ hashFiles('**/Gemfile.lock') }}
-
-      - name: Bundle install
-        run: |
-          bundle config path vendor/bundle
-          bundle install --jobs 4 --retry 3
-
-      - name: Test with RSpec
-        env:
-          RAILS_ENV: "test"
-          DATABASE_URL: "postgres://postgres@localhost:5432/Hello_Ruby_test"
-          RUBYOPT: "-W:no-deprecated -W:no-experimental" # Suppress Rails 6 deprecation warnings for ruby 2.7
-        run: |
-          bundle exec rails db:create
-          bundle exec rails db:migrate
-          bundle exec rspec
-          
+          echo env.BUNDLE_GEMS__CONTRIBSYS__COM=$BUNDLE_GEMS__CONTRIBSYS__COM
+          export BUNDLE_GEMS__CONTRIBSYS__COM=${{ secrets.BUNDLE_GEMS__CONTRIBSYS__COM }}
+      # TODO: Add rest of the secrets
+      # - name: "List directory: ls -ltr"
+      #   run: |
+      #     echo $(pwd)
+      #     echo $(ls -ltr)
+      # - name: Create env file for bertha-pumpngo
+      #   run: |
+      #     echo $(pwd)
+      #     touch bertha-pumpngo/secret.env
+      #     echo BERTHA_BACKEND_HOST= >> bertha-pumpngo/secret.env
+      # # TODO: Add rest of the secrets
+      # - name: Replace bertha-pumpngo path in docker-compose.ci.yml
+      #   run: |
+      #     sed -i 's/context: ..\/bertha-pumpngo/context: bertha-pumpngo/' docker-compose.ci.yml
+      #     sed -i 's/env_file: ..\/bertha-pumpngo/env_file: bertha-pumpngo/' docker-compose.ci.yml
+      # - name: Build images
+      #   run: docker compose -f docker-compose.ci.yml build
+      # - name: Run container
+      #   run: docker compose -f docker-compose.ci.yml up
+      # - name: Run tests
+      #   run: docker compose run unit-test
